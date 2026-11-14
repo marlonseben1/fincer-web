@@ -1,0 +1,216 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": ["**", "!!**/dist"]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 80
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "correctness": {
+        "useExhaustiveDependencies": "warn"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "semicolons": "always",
+      "trailingCommas": "all",
+      "jsxQuoteStyle": "double"
+    }
+  },
+  "json": {
+    "formatter": {
+      "trailingCommas": "none"
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["src/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "patterns": [
+                  {
+                    "group": ["modules/*/*/*", "modules/*/*/*/**"],
+                    "message": "Importe pelo index.ts do módulo (API pública), não por arquivos internos."
+                  },
+                  {
+                    "group": [
+                      "shared/ui/*/*",
+                      "shared/lib/*/*",
+                      "shared/utils/*/*"
+                    ],
+                    "message": "Importe pelo index.ts da pasta de capacidade do shared."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/modules/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "patterns": [
+                  {
+                    "group": ["modules/*/*/*", "modules/*/*/*/**"],
+                    "message": "Importe pelo index.ts do módulo (API pública), não por arquivos internos."
+                  },
+                  {
+                    "group": [
+                      "shared/ui/*/*",
+                      "shared/lib/*/*",
+                      "shared/utils/*/*"
+                    ],
+                    "message": "Importe pelo index.ts da pasta de capacidade do shared."
+                  },
+                  {
+                    "group": ["containers/*", "containers", "app/*", "app"],
+                    "message": "Os imports só descem: app → containers → fluxos → entidades → shared."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/modules/entidades/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "patterns": [
+                  {
+                    "group": ["modules/*/*/*", "modules/*/*/*/**"],
+                    "message": "Importe pelo index.ts do módulo (API pública), não por arquivos internos."
+                  },
+                  {
+                    "group": [
+                      "shared/ui/*/*",
+                      "shared/lib/*/*",
+                      "shared/utils/*/*"
+                    ],
+                    "message": "Importe pelo index.ts da pasta de capacidade do shared."
+                  },
+                  {
+                    "group": [
+                      "containers/*",
+                      "containers",
+                      "app/*",
+                      "app",
+                      "modules/fluxos",
+                      "modules/fluxos/*"
+                    ],
+                    "message": "Os imports só descem: app → containers → fluxos → entidades → shared."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": ["src/shared/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "patterns": [
+                  {
+                    "group": ["modules/*/*/*", "modules/*/*/*/**"],
+                    "message": "Importe pelo index.ts do módulo (API pública), não por arquivos internos."
+                  },
+                  {
+                    "group": [
+                      "shared/ui/*/*",
+                      "shared/lib/*/*",
+                      "shared/utils/*/*"
+                    ],
+                    "message": "Importe pelo index.ts da pasta de capacidade do shared."
+                  },
+                  {
+                    "group": [
+                      "modules",
+                      "modules/*",
+                      "containers",
+                      "containers/*",
+                      "app",
+                      "app/*"
+                    ],
+                    "message": "Os imports só descem: app → containers → fluxos → entidades → shared."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "src/modules/**",
+        "src/shared/ui/**",
+        "src/shared/lib/**",
+        "src/shared/utils/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDefaultExport": "error"
+          }
+        }
+      }
+    },
+    {
+      "includes": [
+        "src/**/*.test.ts",
+        "src/**/*.test.tsx",
+        "src/**/__tests__/**"
+      ],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": "off"
+          }
+        }
+      }
+    }
+  ]
+}
